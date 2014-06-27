@@ -3,25 +3,61 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link type="text/css" rel="stylesheet" href="dn_twittler.css"/>
   </head>
   <body>
+    <h1>Twittler!</h1>
+    <button id="refreshButton">See more tweets</button>
+    <!-- 
+    1) show X more tweets in button
+    2) Use jQuery to collapse all tweets that weren't loaded in that round
+    3) Create button to show all those hidden tweets
+    4) Create new page to show new tweets
+    5) Format time
+    -->
+
     <script>
-
       $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
+       var $body = $('body');
+        //$body.html('');
+       var tweetArray = streams.home;
+       console.log(tweetArray);
+              
+       //we need to make a copy of the array so that one is the master and the other is what we work with. perhaps use unshift?
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
+       var displayTweets = function() { 
+       
+        for (var i = tweetArray.length-1; i > 0; i--) {
+        var tweet = tweetArray[i];
+        var $tweetContainer = $("<div class='tweetContainer'></div>");
+        var tweetUser = $("<p class='user'>" +tweet.user+ "</p>");
+        var tweetMessage = $("<p class='message'>" +tweet.message+ "</p>");
+        var tweetTime = $("<p class='time'>" +tweet.created_at+ "</p>");
+        
+        $tweetContainer.append(tweetUser);
+        $tweetContainer.append(tweetMessage);
+        $tweetContainer.append(tweetTime);
+        $tweetContainer.appendTo($body);
         }
+        tweetArray.splice(tweetArray.length-1);
+        //this has to be added to a "processed array" so that we can collect all of the user tweets in one place. Also, is this the correct use of Splice, particularly the negative number? 
+        
+      };
+      displayTweets();
+      console.log(tweetArray);
+    
+      
+
+      $("button").on("click", function() {
+        $(".tweetContainer").remove();
+        return displayTweets();
+        console.log(tweetArray);
+      })
 
       });
 
     </script>
   </body>
 </html>
+
+
