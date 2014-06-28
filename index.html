@@ -9,6 +9,7 @@
   <body>
     <h1>Twittler!</h1>
     <button id="refreshButton">See more tweets</button>
+    
     <!-- 
     1) show X more tweets in button
     2) Use jQuery to collapse all tweets that weren't loaded in that round
@@ -16,13 +17,17 @@
     4) Create new page to show new tweets
     5) Format time
     -->
-    <div id="tweetFeed">
+    <div id="feeds">
+      <div id="tweetFeed"></div>
+      <div id="userFeed"></div>
     </div>
+
     <script>
       $(document).ready(function(){
        var tweetArray = streams.home;
        var masterArray = [];
 
+       //helper
        var makeTweet = function(tweet) {
         var $tweetContainer = $("<div class='tweetContainer'></div>");
         $tweetContainer.append("<p class='user'>" +tweet.user+ "</p>");
@@ -31,6 +36,7 @@
         return $tweetContainer;
        };
 
+       //runs when the page loads to display all tweets
        var displayTweetsOnLoad = function() { 
         var $tweetSet = $("<div class='tweetSet'></div>"); //could this be refactored?
         $tweetSet.prependTo($("#tweetFeed"));
@@ -44,6 +50,7 @@
         tweetArray.splice(0,tweetArray.length);        
       };
 
+      //refresh button
       $("button").on("click", function() {
         var $tweetSet = $("<div class='tweetSet'></div>"); 
         $tweetSet.prependTo($("#tweetFeed"));
@@ -57,11 +64,11 @@
         tweetArray.splice(0,tweetArray.length);  
       })
 
+      //load all tweets
       displayTweetsOnLoad();
 
 
-      
-
+    
       });
 
     </script>

@@ -12,6 +12,7 @@ h1 {
 #refreshButton  {
 	background: #9C9DA3;
 	border-radius: 3px;
+	position: relative;
 	border: 1px solid #838585;
 	color: #fff;
 	width: 150px;
@@ -20,17 +21,43 @@ h1 {
 
 }
 
-#tweetFeed {
-	position: relative;
-	width: 550px
+#feeds {
+	width: 930px;
+	position: absolute;
+
 }
 
+#tweetFeed {
+	position: relative;
+	width: 450px;
+	float: left;
+	border-radius: 3px;
+	background: #FFFFFF;
+	padding: 10px 0px 10px 0px;
+	margin-right: 25px;
+
+}
+
+#userFeed {
+	position: relative;
+	float: right;
+	width: 450px;
+	border-radius: 3px;
+	background: #FFFFFF;
+	padding: 10px 0px 10px 0px;
+
+}
+
+
 .tweetContainer {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: -1px;
 	height: 50px;
-	margin: 0px 20px -1px 0px;
-	width: 550px;
-	border: 1px solid #BDBDBD;
-	background: #FAFAFA;
+	width: 425px;
+	border-bottom: 1px solid #BDBDBD;
+	background: #FFFFFF;
 
 }
 
