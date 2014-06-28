@@ -44,9 +44,6 @@
         tweetArray.splice(0,tweetArray.length);        
       };
 
-      displayTweetsOnLoad();
-
-
       $("button").on("click", function() {
         var $tweetSet = $("<div class='tweetSet'></div>"); 
         $tweetSet.prependTo($("#tweetFeed"));
@@ -59,6 +56,11 @@
 
         tweetArray.splice(0,tweetArray.length);  
       })
+
+      displayTweetsOnLoad();
+
+
+      
 
       });
 

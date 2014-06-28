@@ -1,8 +1,14 @@
 body {
 	font-family: "Lucida Grande", Arial, Helvetica, Verdana, sans-serif;
 	background: #7FC3F8;
+	margin: 50px 50px 50px 50px;
 
 }
+
+h1 {
+	color: #FFFFFF;
+}
+
 #refreshButton  {
 	background: #9C9DA3;
 	border-radius: 3px;
@@ -14,10 +20,15 @@ body {
 
 }
 
+#tweetFeed {
+	position: relative;
+	width: 550px
+}
+
 .tweetContainer {
 	height: 50px;
 	margin: 0px 20px -1px 0px;
-	width: 800px;
+	width: 550px;
 	border: 1px solid #BDBDBD;
 	background: #FAFAFA;
 
