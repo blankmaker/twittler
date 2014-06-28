@@ -23,44 +23,41 @@
        var tweetArray = streams.home;
        var masterArray = [];
 
-    
+       var makeTweet = function(tweet) {
+        var $tweetContainer = $("<div class='tweetContainer'></div>");
+        $tweetContainer.append("<p class='user'>" +tweet.user+ "</p>");
+        $tweetContainer.append("<p class='message'>" +tweet.message+ "</p>");
+        $tweetContainer.append("<p class='time'>" +tweet.created_at+ "</p>");
+        return $tweetContainer;
+       };
 
        var displayTweetsOnLoad = function() { 
-        var $tweetSet = $("<div class='tweetSet'></div>"); //this could be refactored
+        var $tweetSet = $("<div class='tweetSet'></div>"); //could this be refactored?
         $tweetSet.prependTo($("#tweetFeed"));
 
         _.each(tweetArray, function(tweet) {
-        var $tweetContainer = $("<div class='tweetContainer'></div>");
-        $tweetContainer.append("<p class='user'>" +tweet.user+ "</p>");
-        $tweetContainer.append("<p class='message'>" +tweet.message+ "</p>");
-        $tweetContainer.append("<p class='time'>" +tweet.created_at+ "</p>");
-        $tweetContainer.appendTo($tweetSet);
+        var $newTweet = makeTweet(tweet);
+        $newTweet.appendTo($tweetSet);
         masterArray.push(tweet);
-
         });
+
         tweetArray.splice(0,tweetArray.length);        
-        //this has to be added to a "processed array" so that we can collect all of the user tweets in one place. Also, is this the correct use of Splice, particularly the negative number? 
-        
       };
+
       displayTweetsOnLoad();
 
- 
-    
 
       $("button").on("click", function() {
-        var $tweetSet = $("<div class='tweetSet'></div>"); //this could be refactored
+        var $tweetSet = $("<div class='tweetSet'></div>"); 
         $tweetSet.prependTo($("#tweetFeed"));
 
         _.each(tweetArray, function(tweet, index) {
-        var $tweetContainer = $("<div class='tweetContainer'></div>");
-        $tweetContainer.append("<p class='user'>" +tweet.user+ "</p>");
-        $tweetContainer.append("<p class='message'>" +tweet.message+ "</p>");
-        $tweetContainer.append("<p class='time'>" +tweet.created_at+ "</p>");
-        $tweetContainer.prependTo($tweetSet);
+        var $newTweet = makeTweet(tweet);
+        $newTweet.prependTo($tweetSet);
         masterArray.push(tweet);
         });
-        tweetArray.splice(0,tweetArray.length);  
 
+        tweetArray.splice(0,tweetArray.length);  
       })
 
       });
