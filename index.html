@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="jquery.js"></script>
-    <script src="data_generator.js"></script>
-    <script src="underscore.js"></script>
-    <link type="text/css" rel="stylesheet" href="dn_twittler.css"/>
+    <script src='jquery.js'></script>
+    <script src='data_generator.js'></script>
+    <script src='underscore.js'></script>
+    <link type='text/css' rel='stylesheet' href='dn_twittler.css'/>
   </head>
   <body>
     <h1>Twittler!</h1>
-    <button id="refreshButton">See more tweets</button>
+    <button id='refreshButton'>See more tweets</button>
     
     <!-- 
     1) show X more tweets in button
@@ -17,62 +17,65 @@
     4) Create new page to show new tweets
     5) Format time
     -->
-    <div id="feeds">
-      <div id="tweetFeed"></div>
-      <div id="userFeed"></div>
+    <div id='feeds'>
+      <div id='tweetFeed'></div>
+      <div id='userFeed'></div>
     </div>
 
     <script>
       $(document).ready(function(){
        var tweetArray = streams.home;
-       var masterArray = [];
+       var $tweetSet = $('<div class="tweetSet"></div>');
 
        //helper
        var makeTweet = function(tweet) {
-        var $tweetContainer = $("<div class='tweetContainer'></div>");
-        $tweetContainer.append("<p class='user'>" +tweet.user+ "</p>");
-        $tweetContainer.append("<p class='message'>" +tweet.message+ "</p>");
-        $tweetContainer.append("<p class='time'>" +tweet.created_at+ "</p>");
+        var $tweetContainer = $('<div class="tweetContainer"></div>');
+        $tweetContainer.append('<a class="user" data-user="'+tweet.user+'">'+tweet.user +'</a>');
+        $tweetContainer.append('<p class="message">' +tweet.message+ '</p>');
+        $tweetContainer.append('<p class="time">' +tweet.created_at+ '</p>');
         return $tweetContainer;
        };
 
+        var loadUserTweets = function() {
+        var user = $(this).data('user');
+        $('#userFeed').find('div').remove();
+        
+        _.each(tweetArray, function(tweet, key) {
+          if(tweetArray[key]['user'] === user){
+            var $newTweet = makeTweet(tweet);
+            $newTweet.prependTo('#userFeed');
+            }
+            });
+        };
+
        //runs when the page loads to display all tweets
        var displayTweetsOnLoad = function() { 
-        var $tweetSet = $("<div class='tweetSet'></div>"); //could this be refactored?
-        $tweetSet.prependTo($("#tweetFeed"));
-
         _.each(tweetArray, function(tweet) {
         var $newTweet = makeTweet(tweet);
-        $newTweet.appendTo($tweetSet);
-        masterArray.push(tweet);
-        });
-
-        tweetArray.splice(0,tweetArray.length);        
+        $newTweet.appendTo('#tweetFeed');
+        });     
       };
-
-      //refresh button
-      $("button").on("click", function() {
-        var $tweetSet = $("<div class='tweetSet'></div>"); 
-        $tweetSet.prependTo($("#tweetFeed"));
-
-        _.each(tweetArray, function(tweet, index) {
-        var $newTweet = makeTweet(tweet);
-        $newTweet.prependTo($tweetSet);
-        masterArray.push(tweet);
-        });
-
-        tweetArray.splice(0,tweetArray.length);  
-      })
 
       //load all tweets
       displayTweetsOnLoad();
+      
+ 
+      //refresh button
+      $('button').on('click', function() {
+        $('#tweetFeed').find("#tweetContainer").remove();
+        _.each(tweetArray, function(tweet, index) {
+        var $newTweet = makeTweet(tweet);
+        $newTweet.prependTo('#tweetFeed');
+        });
+        $('a').on('click',loadUserTweets);
+      })
 
+      //load user tweets
+      $('a').on('click',loadUserTweets);
 
     
-      });
+    });
 
     </script>
   </body>
 </html>
-
-
